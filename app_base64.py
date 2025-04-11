@@ -11,7 +11,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Initialize OpenAI client securely
-client = openai.OpenAI(api_key=os.getenv("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"))
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @app.route('/explain-image', methods=['POST'])
 def explain_image():
