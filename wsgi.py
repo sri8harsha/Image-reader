@@ -1,5 +1,6 @@
-from app_base64 import app  # Only import the app
+from app_base64 import app  # Import the app
 
-# Do NOT include app.run() here!
-# Gunicorn will handle running the app.
+# Expose the app object so Gunicorn can find it
+app = app
+
 
