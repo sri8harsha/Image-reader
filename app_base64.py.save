@@ -1,0 +1,35 @@
+from flask import Flask, request, jsonify
+import openai
+import requests
+import base64
+
+app = Flask(__name__)
+
+# Initialize OpenAI client with your key
+client = openai.OpenAI(api_key="YOUR_OPENAI_API_KEY")  # ← Replace this with your actual key
+
+@app.route('/explain-diagram-base64', methods=['POST'])
+def explain_diagram_base64():
+    data = request.json
+    image_url = data.get('image_url')
+
+    if not image_url:
+        return jsonify({"error": "No image URL provided"}), 400
+
+    try:
+        # Download image from the provided URL
+        image_response = requests.get(image_url)
+        if image_response.status_code != 200:
+            return jsonify({"error": "Failed to download image"}), 400
+
+        # Convert image to base64 string
+        image_base64 = base64.b64encode(image_response.content).decode('utf-8')
+        image_data_url = f"data:image/png;base64,{image_base64}"
+
+        # Send to GPT-4o Vision
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {
+                    "role": "user",
+                    "content": 
