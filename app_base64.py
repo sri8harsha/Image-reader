@@ -45,7 +45,7 @@ def explain_image():
         )
 
         explanation = response.choices[0].message.content
-        return jsonify({"explanation": explanation})
+        return jsonify({ "result": { "explanation": explanation } })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
