@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-@app.route('/explain-image', methods=['POST'])  # ✅ This must be exact
+@app.route('/explain-image', methods=['POST'])
 def explain_image():
     data = request.json
     image_url = data.get('image_url')
@@ -20,7 +20,11 @@ def explain_image():
     if not image_url:
         return jsonify({"error": "No image URL provided"}), 400
 
-instruction = user_prompt or "You are an educational assistant. Describe this labeled educational diagram in detail. Explain each visible part, name all components if text is readable, and summarize how these parts are connected. Make sure to reference labels or symbols seen in the image directly."
+    instruction = user_prompt or (
+        "You are an educational assistant. Describe this labeled educational diagram in detail. "
+        "Explain each visible part, name all components if text is readable, and summarize how these parts are connected. "
+        "Make sure to reference labels or symbols seen in the image directly."
+    )
 
     try:
         image_response = requests.get(image_url)
