@@ -20,7 +20,7 @@ def explain_image():
     if not image_url:
         return jsonify({"error": "No image URL provided"}), 400
 
-    instruction = user_prompt or "Describe what is shown in this image in simple, clear terms."
+instruction = user_prompt or "You are an educational assistant. Describe this labeled educational diagram in detail. Explain each visible part, name all components if text is readable, and summarize how these parts are connected. Make sure to reference labels or symbols seen in the image directly."
 
     try:
         image_response = requests.get(image_url)
